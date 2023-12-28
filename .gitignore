@@ -161,3 +161,10 @@ cython_debug/
 
 # VSCode
 .vscode
+
+# Extra
+.DS_Store
+
+# PDFs
+The_Good_Parts_of_AWS_Vasallo.pdf
+The_Good_Parts_of_AWS_Vasallo.epub
