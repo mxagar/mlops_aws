@@ -8,8 +8,10 @@ The forked Github repository with the code is this one:
 
 ## Session 1
 
+Zoom session: [https://discord.com/events/1079107756440690728/1169008338021916782](https://discord.com/events/1079107756440690728/1169008338021916782)
+
 Code is already given, as well as walkthroughs!
-Discord > Server Guide Archive
+Discord > Server Guide Archive.
 
 All sessions are recorded!
 He plans to edit them to concise clips, but that comes later in March
@@ -61,8 +63,10 @@ You don't want to solve the wrong project; start every project asking 5 question
         - Instead of being very intelligent, try not to be stupid.
 
 Book Recommendations:
-	Human in the Loop Machine Learning
-	Interpretable Machine Learning
+
+- Designing Machine Learning Systems
+- Human in the Loop Machine Learning
+- Interpretable Machine Learning
 
 The first rule in machine learning: never start a project with ML, but just with the simplest thing that could possibly work.
 
