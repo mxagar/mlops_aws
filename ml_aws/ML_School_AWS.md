@@ -145,3 +145,10 @@ Active learning is another approach to labeling.
 - We need to combine both uncertainty sampling and diversity sampling.
 
 ![Active Learning](./assets/mlschool_example_active_learning.jpg)
+
+### Interesting Links
+
+Links from other students:
+
+- [ML system design: 300 case studies to learn from](https://www.evidentlyai.com/ml-system-design)
+- [Free Generative AI & Large Language Models Courses](https://learn.activeloop.ai)
