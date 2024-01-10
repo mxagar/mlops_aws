@@ -6,6 +6,8 @@ The forked Github repository with the code is this one:
 
 [ml.school](https://github.com/mxagar/ml.school)
 
+I was part of Cohort 10: 2024-01.
+
 ## Session 1
 
 Zoom session: [https://discord.com/events/1079107756440690728/1169008338021916782](https://discord.com/events/1079107756440690728/1169008338021916782)
@@ -152,3 +154,131 @@ Links from other students:
 
 - [ML system design: 300 case studies to learn from](https://www.evidentlyai.com/ml-system-design)
 - [Free Generative AI & Large Language Models Courses](https://learn.activeloop.ai)
+
+## Session 2
+
+Where we talk about building models.
+
+Heuristics: Lawyers usually pick cases where they only can win.
+
+The most important steps when **pre-processing** data:
+
+- Vectorization: for instance, text needs to be converted into numbers, i.e., a vector or embedding.
+    - Example: CLIP from OpenAI; with it you can create embeddings for images and text and both belong to the same space! That makes possible, among other things, to perform semantic search, i.e., we look for pictures using text.
+    - Encoding is a type of vectorization: label encoding, one-hot encoding.
+        - label encoding creates a hierarchy or order; that can be an issue.
+        - one-hot encoding doesn't create any order, but the features increase and we end up with sparse vectors.
+- Normalization: map to a similar range all feature values; probably, it has no disadvantages?
+    - Standardization is also a type of normalization, but in that case the mean is shifted to 0 and the variance scaled to 1.
+    - Santiago is not sure if it is compulsory to have Gaussian distributions to use normalization of standardization; actually, I think there are probably much bigger issues than that.
+- Handle the missing values:
+    - Ignore rows/samples with many missing features/columns
+    - Ignore columns/features with many missing samples/rows
+    - Fill in with most common/frequent values, mean, 0, etc.
+    - We can also train a model which predicts the missing values.
+
+Then, we start doing **feature engineering**, which is the single biggest impact on model performance.
+
+Metaphor: we start with an egg and we get a chick; that's what feature engineering does, it discovers the real value of the data.
+
+Some examples of feature engineering:
+
+- Splitting dates: from a date, we get days until something (e.g., Christmas), weekday, month, etc.
+- Polynomial features.
+- Binning: we transform continuous features to discrete ones.
+- Apply clustering: assign cluster ids to samples; we leverage unsupervised learning.
+
+Feature engineering is fundamental; when deep learning came along, people thought feature engineering wasn't important anymore -- but that's false!
+
+Modeling: we should start with rule-based algorithms and scale up to machine learning  models:
+
+- Sometimes rule-based algorithms are fine; the issue with them is that their scope of data is very limited.
+- When we see the rule-based model is not enough for the data distributions we have, we can consider using ML.
+- We should start with simple ML models! Then, we start increasing the complexity, if required. We can increase the complexity in many ways: Deep Learning, ensemble models/schemes, etc.
+
+I understand the overall application of framework needs to be constructed so that we can easily replace the algorithms beneath: rule-base, ML, complex ML, etc.
+
+What is a simple model? The simplicity has two aspects:
+
+- Simple structure/architecture: linear regression.
+- Simplicity of use: OpenAI APIs; the models behind are complex, but the APIs are very easy to use!
+
+Santiago means simple to use models; he's concerned by the application complexity.
+
+The ultimate goal is to build a model with predictive power (i.e., more than random guessing); first, establish a baseline and then beat it. A simple baseline consists in random-guessing of the zero-rule algorithm:
+
+- Zero-rule algorithm: predict the majority class or mean/median in a regression problem.
+- The baseline is essential, because sometimes only by random-guessing we can get a 90% accuracy!
+
+We work with two hypotheses:
+
+1. Inputs can predict outputs.
+2. Data is informative enough to learn the relationship between inputs and outputs.
+
+However, in real life, those hypotheses are not always true! Sometimes the data is not predictive! That's the difference to courses.
+
+Therefore, we should build the application so that the model can be replaced; we want to fail as soon as possible.
+
+We should consider the model capabilities; consider all these aspects:
+
+- How sensible is the model to outliers?
+- Training time: how long does it take? 
+- Hardware constraints: edge devices require lightweight models! Always be aware of the model sizes, e.g. [Keras Models](https://keras.io/api/applications/).
+- Model scalability: with time, we'll get more data, wider distributions; how will the model react to that?
+- Model interpretability: anything that makes predictions that affects to human beings needs to be interpretable in one way or the other.
+- Consider starting with something you know or your team knows! You're going to be much faster!
+- Nothing replaces systematic experimentation. Try it!
+
+Word of caution: Be careful with state-of-the-art (SOTA) models! Academia plays games to win stupid prizes; most such models are experiments that maybe work in niche situations.
+
+After we choose a small model that beats baseline and achieves predictive power, it's time to start iterating on it to achieve **generalization**: that's a play between **overfitting** and **regularization**:
+
+- Overfitting is not necessarily bad: it shows that our model can learn patterns; if we cannot overfit our model we're not sure if we can even learn something!
+- Once we overfit with our training set, we can start with the regularization, which consists in reducing the model complexity so that it can generalize better.
+- Hyperparameter tuning is also important here; here, **experiment tracking** is important. Hyper parameter tuning (we need to use a tool for that):
+    - Grid search and random search.
+    - Bayesian optimization.
+
+**Experiment tracking** lets us recreate and compare different experiments. We need to use a tool for that! Comet ML is the tool that Santiago has used for long; it's free and very simple to use. Check the link in the resources. Other tools: Weights & Biases, MLflow.
+
+Some insights:
+
+- Your model will eventually overfit the test set; every time we use feedback from our evaluation to tune our model, we are increasing the variance capture!
+- When data is valuable but scarce, a great strategy is to evaluate the model first, then retrain it using all available data (i.e., including test and validation); however, evaluating the model again doesn't make sense! We just simply don't evaluate the model again after that last training.
+
+Fun fact: historians write history when they know how the events finished; the real history, when it's happening and it's reported in the newspapers is much noisier. That's called hindsight bias, which is a big issue. Similarly, we should set aside the test data without looking at it to avoid hindsight bias; some people even argue that the test set should be used only once and not touched anymore! **Data leakage** is a serious problem: is the test data affects the model, the model will perform embarrasingly!
+
+Andrew Ng had to retract a paper once because they realized they used a leaky validation strategy: data from patients in the train set was used in the test set; then, the risk is that the model learns to identify the patient and decides according to that!
+
+**Distributed training**: we take full advantage of our hardware; there are several approaches:
+
+- **Data parallelism**: replicate same model across multiple nodes and train each replica with a slice of the dataset; then, models are blended (gradients are averaged?).
+- **Model parallelism**: a part of the model is trained in a different node using the entire dataset. This is more complex.
+
+![Data parallelism](./assets/mlschool_data_parallelism.jpg)
+
+![Model parallelism](./assets/mlschool_model_parallelism.jpg)
+
+Santiago is unsure how all this is implemented; he points to the Tensorflow & Pytorch documentation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
