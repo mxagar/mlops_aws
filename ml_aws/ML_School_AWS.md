@@ -8,9 +8,15 @@ The forked Github repository with the code is this one:
 
 I was part of Cohort 10: 2024-01.
 
-## Session 1
+I have the slides and links to the videos locally, but not committed to the repository:
 
-Zoom session: [https://discord.com/events/1079107756440690728/1169008338021916782](https://discord.com/events/1079107756440690728/1169008338021916782)
+- Slides: [`assets/slides/`](./assets/slides/)
+- Links to the session videos: [`session_videos.txt`](./session_videos.txt)
+- Links to the code walkthroughs: [`session_videos.txt`](./session_videos.txt)
+
+All in all, this repository contains only my personal notes, it's not the entire content of the course; additionally, I think ML School was more than a course, it is a community of ML practitioners.
+
+## Session 1, 2024-01-08, Monday, 16:00-18:30 CET
 
 Code is already given, as well as walkthroughs!
 Discord > Server Guide Archive.
@@ -155,7 +161,7 @@ Links from other students:
 - [ML system design: 300 case studies to learn from](https://www.evidentlyai.com/ml-system-design)
 - [Free Generative AI & Large Language Models Courses](https://learn.activeloop.ai)
 
-## Session 2
+## Session 2, 2024-01-10, Wednesday, 16:00-18:45 CET
 
 Where we talk about building models.
 
@@ -260,25 +266,4 @@ Andrew Ng had to retract a paper once because they realized they used a leaky va
 ![Model parallelism](./assets/mlschool_model_parallelism.jpg)
 
 Santiago is unsure how all this is implemented; he points to the Tensorflow & Pytorch documentation.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
