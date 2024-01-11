@@ -1,5 +1,7 @@
 # Machine Learning School with AWS
 
+Participants: more than 50, I think close to 100.
+
 This guide started as a collection of notes after following the cohort-based course [Machine Learning School](https://svpino.gumroad.com/l/mlp) by [Santiago Valderrama](https://twitter.com/svpino) .
 
 The forked Github repository with the code is this one:
@@ -163,6 +165,8 @@ Links from other students:
 
 ## Session 2, 2024-01-10, Wednesday, 16:00-18:45 CET
 
+Participants: around 50 people.
+
 Where we talk about building models.
 
 Heuristics: Lawyers usually pick cases where they only can win.
@@ -266,4 +270,12 @@ Andrew Ng had to retract a paper once because they realized they used a leaky va
 ![Model parallelism](./assets/mlschool_model_parallelism.jpg)
 
 Santiago is unsure how all this is implemented; he points to the Tensorflow & Pytorch documentation.
+
+## Office Hours 1, 2024-01-11, Thursday, 16:00- CET
+
+Less people in the sessions (around 20 persons), we can ask whatever we want, related to the code or the sessions.
+
+Santiago shared his VSCode with the code from the project repository: [ml.school](https://github.com/mxagar/ml.school).
+
+
 
