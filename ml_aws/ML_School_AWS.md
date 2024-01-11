@@ -273,7 +273,7 @@ Santiago is unsure how all this is implemented; he points to the Tensorflow & Py
 
 ## Office Hours 1, 2024-01-11, Thursday, 16:00- CET
 
-Less people in the sessions (around 20 persons), we can ask whatever we want, related to the code or the sessions.
+Less people in the sessions (around 20-30 persons), we can ask whatever we want, related to the code or the sessions.
 
 Santiago shared his VSCode with the code from the project repository: [ml.school](https://github.com/mxagar/ml.school).
 
