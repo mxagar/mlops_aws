@@ -2,7 +2,7 @@
 
 Participants: more than 50, I think close to 100.
 
-This guide started as a collection of notes after following the cohort-based course [Machine Learning School](https://svpino.gumroad.com/l/mlp) by [Santiago Valderrama](https://twitter.com/svpino) .
+This guide started as a collection of notes after following the cohort-based course [Machine Learning School](https://svpino.gumroad.com/l/mlp) by [Santiago Valdarrama](https://twitter.com/svpino) .
 
 The forked Github repository with the code is this one:
 
@@ -271,11 +271,109 @@ Andrew Ng had to retract a paper once because they realized they used a leaky va
 
 Santiago is unsure how all this is implemented; he points to the Tensorflow & Pytorch documentation.
 
-## Office Hours 1, 2024-01-11, Thursday, 16:00- CET
+## Office Hours 1, 2024-01-11, Thursday, 16:00-17:45 CET
 
 Less people in the sessions (around 20-30 persons), we can ask whatever we want, related to the code or the sessions.
 
 Santiago shared his VSCode with the code from the project repository: [ml.school](https://github.com/mxagar/ml.school).
+
+## Session 3, 2024-01-12, Friday, 16:00-18:45 CET
+
+Main message in this session: spend time evaluating the model; we should analyze the model performance overall and in slices, and then we should perform a proper error analysis.
+
+The stakeholders want many goals, which might be in conflict!
+
+- Make it accurate
+- Make it cheap
+- Make it fast
+- Make it rich
+
+Thus, we need to work closely with the business people already in the beginning to design the metrics.
+
+If you try to evaluate a model with the wrong metric, we failed; example: *fraud detection*. In that case, the accuracy as a metric very bad, because most of the transactions are not fraudulent. Our goal would be to minimize the false negatives! Thus, we need to focus on the Type II error, i.e., *recall*.
+
+After picking the metric, we need to define the validation strategy:
+
+- Holdout set: validation split used to evaluate, not used to train.
+- Cross-validation: split the train split into k folds; every k training iteration, we use a different fold to validate the model.
+
+When the validation is done, texting must be done. Usually, books and courses suggest using a random test split; in practice we should carry out **backtesting**: we use the last data in time for testing, and the previous data in time for training.
+
+![Backtesting](./assets/mlschool_backtesting.jpg)
+
+The main ideas here are:
+
+- The test split cannot have been seen by the model.
+- It's better if we take data from the future to test the model. That way, we can see the impact of time on our model.
+
+In the figure above, each of the 3 trainings is training the model from scratch.
+
+Similarly, we can apply this idea to other configurations. For instance, if the data comes from different sources or locations, maybe we can set aside the data from a location; that way, we use that data for testing. That shows us the bias of each location!
+
+To evaluate the fairness of the data, the best strategy is to introduce controlled changes and check which are the outputs. There is a big issue in the US with the race: many models learn to reject loans depending on the race.
+
+Along this lines, we should also evaluate the model metrics in stratified groups; focusing only on the total/average metric score might be a huge error:
+
+![Model Fairness](./assets/mlschool_model_fairness.jpg)
+
+In the figure above, if we choose model 2, we are screwing a minority group; if we choose model 1, the overall metric is worse (less profit). So the decision depends on the use-case or business problem.
+
+Therefore, we need to look into slices of data and see how the model behaves with each slice.
+
+Santiago emphasizes the need of a correct AI ethics discipline.
+
+We also need to be aware of data paradoxes and pitfalls, e.g., the **Simpson Paradox**. Again, data slicing is very important; global metrics might hide the opposite insights!
+
+Note: we need to identify the slices or subsets; for that, we can:
+
+- Use our knowledge.
+- Apply error analysis: have a look at the FP & FN samples (incorrect predictions).
+
+**Error analysis** increases our output significantly! Example: image classification. I check the incorrect samples; then, I decide to tag all images with an additional label: good quality, decent quality, low quality. After that, I have a data slicing and evaluate the metric performance on each slice:
+
+![Quality slices](./assets/mlschool_quality.jpg)
+
+On which part should we focus (see the figure)? We need to look at
+
+- The **baseline** to take a decision; the baseline in our case is the human performance.
+- The weight or **frequency** of each slice.
+
+A weighted difference of the baseline and the slice performance is the value we need to consider: we pick to focus on the slice which has the largest difference.
+
+Instead of picking the quality tag/label, we can do similar other things:
+
+- We can observe the images/samples and realize that they have some characteristics in common, e.g., images that were taken by a phone, or images on rainy days, etc.
+- We can apply some clustering algorithms to annotate in a weakly supervised manner the samples and use the clusters as slices.
+
+The vast majority of the data in the real world is **imbalanced**; and, usually, the interesting class is the minority one (fraud, sickness, etc.). Handling imbalanced data:
+
+- Use stratification.
+- We could try weights.
+- In general, try to avoid any other strategies:
+    - Oversampling.
+    - Undersampling.
+    - SMOTE.
+    - The reason is that we want to learn the distribution of our data!
+
+Also, when we have imbalanced datasets, we should consider performing **anomaly detection**:
+
+- Autoencoders
+- Siamese Networks
+- Generate embeddings and compare them: learn to create embeddings of good doors; if we pass a broken door, the embedding should be far away from the rest.
+
+**Data augmentation**: the main advantage is that  we expose the model to synthetic data with other characteristics, so the model becomes more general. However, don't mix data augmentation with oversampling: we need to apply changes and if possible, to all images/samples.
+
+New data augmentation technique he's learned about recently: **MixUp**. It consists in generating synthetic images by blending existing samples at different opacities and turning the discrete labels into continuous labels! The model becomes more robust to unseen samples!
+
+A way to augment text is to use back translation:
+
+- Orginal: "Food was great."
+- Translation: "Muy buena la comida".
+- Back-translation (augmentation): "The food was fantastic."
+
+Another way for text are templates: take a sentence and pick 2 words in it; then, for each word, other possible words that could fit into the sentence are defined. Finally, we combine all of them.
+
+Debugging: Find the video by Karpathy where he explains how he develops neural nets, very interesting!
 
 
 
